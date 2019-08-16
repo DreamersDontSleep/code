@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>二维码</title>
+		<link rel="stylesheet" type="text/css" href="css/index.css"/>
+		<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/template.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="content">
+			
+		</div>
+		<script type="text/html" id="fdc">
+			<h3>房地产估价报告</h3>
+			<table border="" cellspacing="" cellpadding="">
+				<tr>
+					<th>估价报告编号</th>
+					<td>{{$data.assessReportNum}}</td>
+				</tr>
+				<tr>
+					<th>项目名称</th>
+					<td>{{$data.projectName}}</td>
+				</tr>
+				<tr>
+					<th>估价目的</th>
+					<td>{{$data.assessAim}}</td>
+				</tr>
+				<tr>
+					<th>产权人</th>
+					<td>{{$data.applicant}}</td>
+				</tr>
+				<tr>
+					<th>建筑面积</th>
+					<td>{{$data.buildingArea}}</td>
+				</tr>
+				<tr>
+					<th>评估总价</th>
+					<td>{{$data.assessTotalPrice}}</td>
+				</tr>
+			</table>
+		</script>
+		<script type="text/html" id="td">
+			<h3>土地估价报告</h3>
+			<table border="" cellspacing="" cellpadding="">
+				<tr>
+					<th>估价报告编号</th>
+					<td>{{$data.assessReportNum}}</td>
+				</tr>
+				<tr>
+					<th>项目名称</th>
+					<td>{{$data.projectName}}</td>
+				</tr>
+				<tr>
+					<th>估价目的</th>
+					<td>{{$data.assessAim}}</td>
+				</tr>
+				<tr>
+					<th>产权人</th>
+					<td>{{$data.applicant}}</td>
+				</tr>
+				<tr>
+					<th>土地面积</th>
+					<td>{{$data.landArea}}</td>
+				</tr>
+				<tr>
+					<th>评估总价</th>
+					<td>{{$data.assessTotalPrice}}</td>
+				</tr>
+			</table>
+		</script>
+		<script type="text/html" id="zc">
+			<h3>资产评估报告</h3>
+			<table border="" cellspacing="" cellpadding="">
+				<tr>
+					<th>估价报告编号</th>
+					<td>{{$data.assessReportNum}}</td>
+				</tr>
+				<tr>
+					<th>项目名称</th>
+					<td>{{$data.projectName}}</td>
+				</tr>
+				<tr>
+					<th>估价目的</th>
+					<td>{{$data.assessAim}}</td>
+				</tr>
+				<tr>
+					<th>被评估单位名称</th>
+					<td>{{$data.assessedUnitName}}</td>
+				</tr>
+				<tr>
+					<th>评估结论</th>
+					<td></td>
+				</tr>
+			</table>
+		</script>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			console.log(window.location.href)
+			// var $url = "http://fcpgpre.jstspg.com/sh?id=13&reportType=4";
+			// var id = 11;
+			// var reportType = 3;
+			function GetRequest() {
+				// var url = "http://fcpgpre.jstspg.com/sh?a=0.22462138667212111&id=13&reportType=4"; //获取url中"?"符后的字串
+				var url = window.location.href;
+				var theRequest = new Object();
+				if (url.indexOf("?") != -1) {
+					var str = url.substr(1);
+					strs = str.split("&");
+					for(var i = 0; i < strs.length; i ++) {
+						theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+					}
+				}
+				return theRequest;
+			}
+			var Request = new Object();
+			Request = GetRequest();
+			console.log(Request)
+			var id,reportType;
+			id = Request['id'];
+			reportType = Request['reportType'];
+			console.log("id",id)
+			console.log("reportType",reportType)
+			$.ajax({
+				type:"get",
+				url:'http://fcpgpre.jstspg.com/rpt/index/getReportsDetail?id='+ id + '&reportType=' + reportType + '&a=' + Math.random(),
+				async:true,
+				data:{
+				},
+				dataType:"json",
+				success:function(res){
+					console.log(res)
+					if(res.code == 200){
+						var $data = res.data
+						if(reportType == 1){
+							$(".content").empty().append(template("fdc",$data));
+						}else if(reportType == 2){
+							$(".content").empty().append(template("td",$data));
+						}else if(reportType == 3){
+							$(".content").empty().append(template("zc",$data));
+						}
+					}
+				}
+			})
+		})
+	</script>
+</html>
