@@ -10,11 +10,12 @@
 		<style type="text/css">
 			table{
 				width: 100%;
-				border: none;
+				border: 1px solid #E8E8E8;
+				border-bottom: none;
 			}
 			table thead tr{
 				height: 77px;
-				/* border-bottom: 1px solid #E8E8E8; */
+				border-bottom: 1px solid #E8E8E8;
 				font-size: 14px;
 				color: #252525;
 				background: #FAFAFA;
@@ -25,12 +26,24 @@
 			}
 			table tbody tr{
 				height: 77px;
-				/* border-bottom: 1px solid #E8E8E8; */
+				border-bottom: 1px solid #E8E8E8;
 				font-size: 14px;
 				color: #5E5E5E;
 			}
 			table tbody tr td{
 				padding-left: 24px;
+			}
+			.content h3{
+				position: relative;
+				height: 40px;
+				line-height: 40px;
+				text-indent: 40px;
+			}
+			.content img{
+				width: 40px;
+				height: 40px;
+				position: absolute;
+				left: 0;
 			}
 		</style>
 	</head>
@@ -39,7 +52,7 @@
 			
 		</div>
 		<script type="text/html" id="fdc">
-			<h3>房地产估价报告</h3>
+			<h3><img src="img/ss.jpg" >房地产估价报告</h3>
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<th>估价报告编号</th>
@@ -68,7 +81,7 @@
 			</table>
 		</script>
 		<script type="text/html" id="td">
-			<h3>土地估价报告</h3>
+			<h3><img src="img/ss.jpg" >土地估价报告</h3>
 			<table border="" cellspacing="" cellpadding="">
 				<tr>
 					<th>估价报告编号</th>
@@ -97,7 +110,7 @@
 			</table>
 		</script>
 		<script type="text/html" id="zc">
-			<h3>资产评估报告</h3>
+			<h3><img src="img/ss.jpg" >资产评估报告</h3>
 			<table border="" cellspacing="" cellpadding="">
 				<tr>
 					<th>估价报告编号</th>
@@ -121,6 +134,32 @@
 				</tr>
 			</table>
 		</script>
+		<script type="text/html" id="ypg">
+			<h3><img src="img/ss.jpg" width="50" height="50">预评估报告</h3>
+			<table border="0" cellspacing="0" cellpadding="0">
+
+				<tr>
+					<th>项目名称</th>
+					<td>{{$data.projectName}}</td>
+				</tr>
+				<tr>
+					<th>估价目的</th>
+					<td>{{$data.assessAim}}</td>
+				</tr>
+				<tr>
+					<th>产权人</th>
+					<td>{{$data.applicant}}</td>
+				</tr>
+				<tr>
+					<th>建筑面积</th>
+					<td>{{$data.buildingArea}}</td>
+				</tr>
+				<tr>
+					<th>评估总价</th>
+					<td>{{$data.assessTotalPrice}}</td>
+				</tr>
+			</table>
+		</script>
 	</body>
 	<script type="text/javascript">
 		$(function(){
@@ -129,7 +168,7 @@
 			// var id = 11;
 			// var reportType = 3;
 			function GetRequest() {
-				// var url = "http://fcpgpre.jstspg.com/sh?a=0.22462138667212111&id=21&reportType=3"; //获取url中"?"符后的字串
+				// var url = "http://fcpgpre.jstspg.com/sh?a=0.22462138667212111&id=102&reportType=4"; //获取url中"?"符后的字串
 				var url = window.location.href;
 				var theRequest = new Object();
 				if (url.indexOf("?") != -1) {
@@ -166,6 +205,8 @@
 							$(".content").empty().append(template("td",$data));
 						}else if(reportType == 3){
 							$(".content").empty().append(template("zc",$data));
+						}else if(reportType == 4){
+							$(".content").empty().append(template("ypg",$data));
 						}
 					}
 				}
